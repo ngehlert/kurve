@@ -2,6 +2,7 @@ import { Player } from './player';
 import { Config } from './config';
 import { getRandomNumber } from './utils';
 import { EKeyCode } from './keyboard-controls';
+import { EventHandler } from './event-handler';
 
 class GameEngine {
 
@@ -14,8 +15,6 @@ class GameEngine {
 
     private playerRanks: Array<Player> = [];
     private resolveCallback: Function | undefined;
-
-    private startDrawingIntervalEventListener = this.startDrawingIntervalEvent.bind(this);
 
     constructor(canvas: CanvasRenderingContext2D, players: Array<Player>) {
         this.canvasContext = canvas;
@@ -36,15 +35,15 @@ class GameEngine {
             this.draw();
             this.draw();
 
-            document.addEventListener('keydown', this.startDrawingIntervalEventListener);
+            EventHandler.addEventListener('draw', document, 'keydown', this.startDrawingIntervalEvent.bind(this));
         })
     }
 
     private startDrawingIntervalEvent(event: KeyboardEvent) {
-        document.removeEventListener('keydown', this.startDrawingIntervalEventListener);
-        if(event.keyCode == EKeyCode.Space) {
+        if(event.keyCode === EKeyCode.Space || event.keyCode === EKeyCode.Enter) {
             if (!this.interval) {
                 this.interval = setInterval(() => {
+                    EventHandler.removeEventListener('draw');
                     this.draw();
                 }, 1000 / Config.fps);
             }
@@ -77,7 +76,6 @@ class GameEngine {
 
                 if (this.hitTest({x: player.xPosition + deltaX, y: player.yPosition + deltaY})) {
                     this.playerRanks.unshift(player);
-
                     player.isAlive = false;
 
                     const alivePlayers: Array<Player> = this.players.filter((player: Player) => {

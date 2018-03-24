@@ -34,7 +34,9 @@ class PlayerManager {
     }
 
     private bindKeyboardControls(player: Player): void {
+        // Todo: To beb consistent we should use the EventHandler here...
         document.addEventListener('keydown', (event: KeyboardEvent) => {
+            event.preventDefault();
             if (event.keyCode == player.leftControl) {
                 player.isTurningLeft = true;
             }
@@ -43,6 +45,7 @@ class PlayerManager {
             }
         });
         document.addEventListener('keyup', (event: KeyboardEvent) => {
+            event.preventDefault();
             if (event.keyCode == player.leftControl) {
                 player.isTurningLeft = false;
             }
@@ -90,12 +93,6 @@ class PlayerManager {
         });
     }
 
-    public getAlivePlayers(): Array<Player> {
-        return this.getPlayers().filter((player: Player): boolean => {
-            return player.isAlive;
-        });
-    }
-
     public getPlayers(): Array<Player> {
         return Array.from(this.players.values());
     }
@@ -112,23 +109,23 @@ class PlayerManager {
         });
     }
 
-    public getMaxScore(): number {
-        return (this.getNumberOfActivePlayers() - 1) * 10;
+    public getHighestScore(): number {
+        const scores: Array<number> = Array.from(this.players.values()).map((player: Player) => {
+            return player.score;
+        });
+        return Math.max(...scores);
+    }
+
+    public resetActiveStatus(): void {
+        Array.from(this.players.values()).forEach((player: Player) => {
+            player.isActive = false;
+        })
     }
 
     public resetScores(): void {
         Array.from(this.players.values()).forEach((player: Player) => {
             player.score = 0;
         })
-    }
-
-    public getPlayerById(id: number): Player {
-        const player: Player | undefined = this.players.get(id);
-        if (!player) {
-            throw new Error('player not found');
-        }
-
-        return player;
     }
 }
 

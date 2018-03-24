@@ -3,19 +3,14 @@ import { PlayerManager } from './player-manager';
 import { GameEngine } from './game-engine';
 import { Player } from './player';
 import { EKeyCode, EMouseClick } from './keyboard-controls';
+import { EventHandler } from './event-handler';
+import { FireworkService } from './firework/firework-service';
 
 class GameController {
     private gameEngine: GameEngine | undefined;
 
     private readonly frameLineWidth: number = 5;
-
-    /**
-     * Ugly work around to remove arrow functions as event listener
-     */
-    private togglePlayerReadyStateKeyboardListener = this.togglePlayerReadyStateKeyboard.bind(this);
-    private togglePlayerReadyStateMouseListener = this.togglePlayerReadyStateMouse.bind(this);
-    private startGameEventListenerListener = this.startGameEventListener.bind(this);
-    private startNextRoundKeyboardEventListener = this.startNextRoundKeyboardEvent.bind(this);
+    private fireworkService: FireworkService = new FireworkService(this.drawingContext, false);
 
     constructor(private drawingContext: CanvasRenderingContext2D, private playerManager: PlayerManager) {
         this.drawKeySettings();
@@ -25,18 +20,18 @@ class GameController {
      * This basically starts an entire game.
      */
     private startGameEventListener(event: KeyboardEvent) {
-        if (event.keyCode === EKeyCode.Space) {
+        if (event.keyCode === EKeyCode.Space  || event.keyCode === EKeyCode.Enter) {
             if (this.playerManager.getNumberOfActivePlayers() < 2) {
                 return;
             }
-            this.drawFrames();
+            this.drawGameFrames();
             this.gameEngine = new GameEngine(this.drawingContext, this.playerManager.getPlayers());
 
             this.playerManager.initializePlayers();
             this.startRound();
-            document.removeEventListener('keydown', this.togglePlayerReadyStateKeyboardListener);
-            document.removeEventListener('mousedown', this.togglePlayerReadyStateMouseListener);
-            document.removeEventListener('keydown', this.startGameEventListenerListener);
+            EventHandler.removeEventListener('toggle-ready-keyboard');
+            EventHandler.removeEventListener('toggle-ready-mouse');
+            EventHandler.removeEventListener('start-game');
         }
     }
 
@@ -44,23 +39,74 @@ class GameController {
      * Starts a new round.
      */
     private startRound(): void {
-        document.removeEventListener('keydown', this.startNextRoundKeyboardEventListener);
         this.drawPlayingFieldFrame();
         this.playerManager.initializePlayers();
         if (this.gameEngine) {
-            this.gameEngine.start().then((ranks: Array<Player>) => {
-                document.addEventListener('keydown', this.startNextRoundKeyboardEventListener);
-                this.playerManager.updateScores(ranks);
-                this.drawScoreboard();
-            });
+            this.gameEngine.start()
+                .then((ranks: Array<Player>) => {
+                    this.playerManager.updateScores(ranks);
+                    this.drawScoreboard();
+                    if (this.playerManager.getHighestScore() >= this.getMaxScore()) {
+                        this.drawWinningScreen();
+                    } else {
+                        EventHandler.addEventListener('start-new-round', document, 'keydown', this.startNextRoundKeyboardEvent.bind(this));
+                    }
+                });
         }
     }
 
     private startNextRoundKeyboardEvent(event: KeyboardEvent) {
-        if(event.keyCode == EKeyCode.Space) {
+        if(event.keyCode === EKeyCode.Space  || event.keyCode === EKeyCode.Enter) {
             if (this.gameEngine) {
+                EventHandler.removeEventListener('start-new-round');
                 this.startRound();
             }
+        }
+    }
+
+    private drawWinningScreen(): void {
+        this.drawingContext.textAlign = 'middle';
+        const fontSize: number = 40;
+        this.drawingContext.font = `${fontSize}px Fredericka the Great, cursive`;
+        const playersWon: Array<Player> = this.playerManager.getPlayers()
+            .filter((player: Player) => {
+                return player.score === this.playerManager.getHighestScore();
+            });
+        const textString: string = `${playersWon.map((player: Player) => player.name).join(', ')} won !!!`;
+        const textWidth: number = this.drawingContext.measureText(textString).width;
+
+        let xPosition: number = ((Config.canvasWidth - Config.scoreBoardWith) / 2) - (textWidth / 2);
+        playersWon.forEach((player: Player, index: number) => {
+            this.drawingContext.fillStyle = player.color;
+            const textChunk: string = `${player.name}${index < playersWon.length - 1 ? ', ' : ''}`;
+            this.drawingContext.fillText(
+                textChunk,
+                xPosition,
+                (Config.canvasHeight / 2) + (fontSize / 2),
+            );
+            xPosition += this.drawingContext.measureText(textChunk).width;
+        });
+
+        this.drawingContext.fillStyle = '#ffffff';
+        const textChunk: string = ' won !!!';
+        this.drawingContext.fillText(
+            textChunk,
+            xPosition,
+            (Config.canvasHeight / 2) + (fontSize / 2),
+        );
+
+        this.fireworkService.start();
+
+        this.playerManager.resetActiveStatus();
+        this.playerManager.resetScores();
+        EventHandler.addEventListener('start-new-game', document, 'keydown', this.startNewGameKeyboardEvent.bind(this));
+    }
+
+    private startNewGameKeyboardEvent(event: KeyboardEvent) {
+        if(event.keyCode === EKeyCode.Space  || event.keyCode === EKeyCode.Enter) {
+            EventHandler.removeEventListener('start-new-game');
+            this.fireworkService.stop();
+            this.drawKeySettings();
         }
     }
 
@@ -91,7 +137,7 @@ class GameController {
         const fontSize: number = 16;
         this.drawingContext.font = `lighter ${fontSize}px Helvetica, Arial, sans-serif`;
         this.drawingContext.fillStyle = '#ffffff';
-        const textString: string = 'If 2 or more players have joined, start the game by pressing Space';
+        const textString: string = 'If 2 or more players have joined, start the game by pressing Space or Enter';
         const textWidth: number = this.drawingContext.measureText(textString).width;
         this.drawingContext.fillText(
             textString,
@@ -99,9 +145,24 @@ class GameController {
             Config.canvasHeight - 50,
         );
 
-        document.addEventListener('keydown', this.togglePlayerReadyStateKeyboardListener);
-        document.addEventListener('mousedown', this.togglePlayerReadyStateMouseListener);
-        document.addEventListener('keydown', this.startGameEventListenerListener);
+        EventHandler.addEventListener(
+            'toggle-ready-keyboard',
+            document,
+            'keydown',
+            this.togglePlayerReadyStateKeyboard.bind(this)
+        );
+        EventHandler.addEventListener(
+            'toggle-ready-mouse',
+            document,
+            'mousedown',
+            this.togglePlayerReadyStateMouse.bind(this)
+        );
+        EventHandler.addEventListener(
+            'start-game',
+            document,
+            'keydown',
+            this.startGameEventListener.bind(this)
+        );
     }
 
     private togglePlayerReadyStateMouse(event: MouseEvent) {
@@ -226,7 +287,7 @@ class GameController {
         });
     }
 
-    private drawFrames() {
+    private drawGameFrames() {
         this.drawPlayingFieldFrame();
         this.drawScoreboard();
     };
@@ -247,6 +308,10 @@ class GameController {
             Config.canvasWidth - Config.scoreBoardWith - (this.frameLineWidth / 2),
             Config.canvasHeight - this.frameLineWidth
         );
+    }
+
+    private getMaxScore(): number {
+        return (this.playerManager.getNumberOfActivePlayers() - 1) * 10;
     }
 }
 

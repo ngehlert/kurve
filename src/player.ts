@@ -96,16 +96,8 @@ class Player {
         return this._leftControl;
     }
 
-    set leftControl(value: KeyboardControls) {
-        this._leftControl = value;
-    }
-
     get rightControl(): KeyboardControls {
         return this._rightControl;
-    }
-
-    set rightControl(value: KeyboardControls) {
-        this._rightControl = value;
     }
 
     get isActive(): boolean {

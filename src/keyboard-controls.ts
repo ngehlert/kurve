@@ -10,6 +10,7 @@ enum EKeyCode {
     Left = 37,
     Down = 40,
     Space = 32,
+    Enter = 13,
 }
 
 enum EMouseClick {

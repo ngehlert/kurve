@@ -4,14 +4,15 @@ import { Player } from './player';
 import { EColor } from './color';
 import { Config } from './config';
 import { EKeyCode, EMouseClick } from './keyboard-controls';
+import { EventHandler } from './event-handler';
 
 window.onload = () => {
+
     Config.canvasWidth = document.body.clientWidth - 100;
     Config.canvasHeight = document.body.clientHeight - 100;
-    const canvasId = 'canvas';
 
+    const canvasId: string = 'canvas';
     const canvasElement: HTMLCanvasElement | null = document.getElementById(canvasId) as HTMLCanvasElement;
-
     if (!canvasElement) {
         throw new Error('No canvas element found');
     }
@@ -26,7 +27,8 @@ window.onload = () => {
     }
 
     drawIntroText();
-    document.addEventListener('keydown', initGame);
+
+    EventHandler.oneTimeEventListener(document, 'keydown', initGame);
 
     function drawIntroText() {
         const frameLineWidth: number = 5;
@@ -53,7 +55,6 @@ window.onload = () => {
     }
 
     function initGame() {
-        document.removeEventListener('keydown', initGame);
         const playerManager: PlayerManager = new PlayerManager();
         const player1: Player = new Player(1, 'Player 1', EColor.Red, EKeyCode.One, EKeyCode.Q);
         playerManager.addPlayer(player1);
@@ -72,7 +73,6 @@ window.onload = () => {
 
         const player6: Player = new Player(6, 'Player 6', EColor.Blue, EMouseClick.Left, EMouseClick.Right);
         playerManager.addPlayer(player6);
-
 
         const game: GameController = new GameController(drawingContext, playerManager);
     }
