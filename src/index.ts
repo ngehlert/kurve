@@ -8,8 +8,8 @@ import { EventHandler } from './event-handler';
 
 window.onload = () => {
 
-    Config.canvasWidth = document.body.clientWidth - 100;
-    Config.canvasHeight = document.body.clientHeight - 100;
+    Config.canvasWidth = document.body.clientWidth - 20;
+    Config.canvasHeight = document.body.clientHeight - 50;
 
     const canvasId: string = 'canvas';
     const canvasElement: HTMLCanvasElement | null = document.getElementById(canvasId) as HTMLCanvasElement;
@@ -44,13 +44,24 @@ window.onload = () => {
         const fontSize: number = Config.canvasHeight / 10;
         drawingContext.font = `${fontSize}px Fredericka the Great, cursive`;
         drawingContext.fillStyle = '#ffffff';
-        const textString: string = 'Achtung, die Kurve !';
-        const textWidth: number = drawingContext.measureText(textString).width;
+        let textString: string = 'Achtung, die Kurve !';
+        let textWidth: number = drawingContext.measureText(textString).width;
 
         drawingContext.fillText(
             textString,
             (Config.canvasWidth / 2) - (textWidth / 2),
             (Config.canvasHeight / 2) + (fontSize / 2),
+        );
+
+        drawingContext.textAlign = 'middle';
+        drawingContext.font = `lighter 16px Helvetica, Arial, sans-serif`;
+        drawingContext.fillStyle = '#ffffff';
+        textString = 'Press any key to continue';
+        textWidth = drawingContext.measureText(textString).width;
+        drawingContext.fillText(
+            textString,
+            (Config.canvasWidth / 2) - (textWidth / 2),
+            Config.canvasHeight - 50,
         );
     }
 

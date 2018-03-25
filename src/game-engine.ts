@@ -65,10 +65,10 @@ class GameEngine {
             })
             .forEach((player: Player) => {
                 if (player.isTurningLeft) {
-                    player.angle -= 2;
+                    player.angle -= Config.angleModifier;
                 }
                 if (player.isTurningRight) {
-                    player.angle += 2;
+                    player.angle += Config.angleModifier;
                 }
 
                 let deltaX = Math.cos(player.angle * Math.PI / 180) * this.speed;
@@ -124,7 +124,7 @@ class GameEngine {
     }
 
     private getStepsUntilNextHole(): number {
-        return Math.floor(getRandomNumber(1, 100) * (10 / Config.holeFrequency));
+        return Math.floor(getRandomNumber(1, 100) * (100 / Config.holeFrequency));
     }
 
     private hitTest(point: {x: number, y: number}): boolean {

@@ -16,6 +16,7 @@
             width: 100%;
             height: 100%;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
         }
@@ -30,6 +31,18 @@
             top: -10px;
             left: -10px;
         }
+
+        .footer {
+            padding: 12px 0 0 0;
+        }
+
+        a:link,
+        a:hover,
+        a:active,
+        a:visited {
+            color: #d12026;
+            text-decoration: none;
+        }
     </style>
     <title>Zatacka</title>
 </head>
@@ -37,6 +50,9 @@
     <div class="font-loader-hack">¯\_(ツ)_/¯</div>
     <div class="flex-container">
         <canvas id="canvas"></canvas>
+        <div class="footer">
+            Fork me on <a href="https://github.com/ngehlert/kurve" target="_blank">GitHub</a>
+            - Made by <a href="https://ngehlert.de" target="_blank">Nicolas Gehlert</a></div>
     </div>
 </body>
 </html>
