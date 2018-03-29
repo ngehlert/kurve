@@ -1,4 +1,4 @@
-import {EColor} from "./color";
+import { EColor } from './color';
 import { KeyboardControls } from './keyboard-controls';
 
 class Player {
@@ -16,7 +16,13 @@ class Player {
     private _rightControl: KeyboardControls;
     private _isActive: boolean = false;
 
-    constructor(id: number, name: string, color: EColor,  leftControl: KeyboardControls, rightControl: KeyboardControls) {
+    constructor(
+        id: number,
+        name: string,
+        color: EColor,
+        leftControl: KeyboardControls,
+        rightControl: KeyboardControls,
+    ) {
         this._id = id;
         this._name = name;
         this._color = color;

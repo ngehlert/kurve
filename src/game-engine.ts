@@ -8,21 +8,21 @@ class GameEngine {
 
     private interval: number = 0;
     private canvasContext: CanvasRenderingContext2D;
-    private players: Array<Player>;
+    private players: Player[];
     private stepsUntilHolePerPlayer: Map<number, number> = new Map<number, number>();
     private holeSizePerPlayer: Map<number, number> = new Map<number, number>();
     private readonly speed: number = Config.pixelsPerSecond * (1000 / Config.fps / 1000);
 
-    private playerRanks: Array<Player> = [];
+    private playerRanks: Player[] = [];
     private resolveCallback: Function | undefined;
 
-    constructor(canvas: CanvasRenderingContext2D, players: Array<Player>) {
+    constructor(canvas: CanvasRenderingContext2D, players: Player[]) {
         this.canvasContext = canvas;
         this.players = players;
 
     }
 
-    public start(): Promise<Array<Player>> {
+    public start(): Promise<Player[]> {
         if (this.interval) {
             return new Promise(resolve => resolve([]));
         }
@@ -35,17 +35,25 @@ class GameEngine {
             this.draw();
             this.draw();
 
-            EventHandler.addEventListener('draw', document, 'keydown', this.startDrawingIntervalEvent.bind(this));
-        })
+            EventHandler.addEventListener(
+                'draw',
+                document,
+                'keydown',
+                this.startDrawingIntervalEvent.bind(this),
+            );
+        });
     }
 
     private startDrawingIntervalEvent(event: KeyboardEvent) {
-        if(event.keyCode === EKeyCode.Space || event.keyCode === EKeyCode.Enter) {
+        if (event.keyCode === EKeyCode.Space || event.keyCode === EKeyCode.Enter) {
             if (!this.interval) {
-                this.interval = setInterval(() => {
-                    EventHandler.removeEventListener('draw');
-                    this.draw();
-                }, 1000 / Config.fps);
+                this.interval = setInterval(
+                    () => {
+                        EventHandler.removeEventListener('draw');
+                        this.draw();
+                    },
+                    1000 / Config.fps,
+                );
             }
         }
     }
@@ -71,14 +79,14 @@ class GameEngine {
                     player.angle += Config.angleModifier;
                 }
 
-                let deltaX = Math.cos(player.angle * Math.PI / 180) * this.speed;
-                let deltaY = Math.sin(player.angle * Math.PI / 180) * this.speed;
+                const deltaX = Math.cos(player.angle * Math.PI / 180) * this.speed;
+                const deltaY = Math.sin(player.angle * Math.PI / 180) * this.speed;
 
-                if (this.hitTest({x: player.xPosition + deltaX, y: player.yPosition + deltaY})) {
+                if (this.hitTest({ x: player.xPosition + deltaX, y: player.yPosition + deltaY })) {
                     this.playerRanks.unshift(player);
                     player.isAlive = false;
 
-                    const alivePlayers: Array<Player> = this.players.filter((player: Player) => {
+                    const alivePlayers: Player[] = this.players.filter((player: Player) => {
                         return player.isAlive;
                     });
 

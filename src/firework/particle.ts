@@ -3,7 +3,7 @@ import { FireworkConfig } from './config';
 class Particle {
     private lifeTime: number = FireworkConfig.fireworkLifeTime;
     private radius: number = 3;
-    private path: Array<any> = [];
+    private path: any[] = [];
 
     constructor(
         private drawingContext: CanvasRenderingContext2D,
@@ -20,7 +20,7 @@ class Particle {
 
         // add point to path but if full, remove a point first
         if (this.path.length >= FireworkConfig.trailLength) this.path.shift();
-        this.path.push([this.x, this.y])
+        this.path.push([this.x, this.y]);
 
         // update speed n position n stuff
         this.vy += this.ay;

@@ -33,7 +33,7 @@ window.onload = () => {
     function drawIntroText() {
         const frameLineWidth: number = 5;
         drawingContext.lineWidth = frameLineWidth;
-        drawingContext.strokeStyle = "#6E6E6E";
+        drawingContext.strokeStyle = '#6E6E6E';
         drawingContext.strokeRect(
             frameLineWidth / 2,
             frameLineWidth / 2,

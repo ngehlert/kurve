@@ -26,7 +26,10 @@ class PlayerManager {
                 return player.isActive;
             })
             .forEach((player: Player) => {
-                player.xPosition = getRandomNumber((Config.canvasWidth - Config.scoreBoardWith) / 5, 4 * (Config.canvasWidth - Config.scoreBoardWith) / 5);
+                player.xPosition = getRandomNumber(
+                    (Config.canvasWidth - Config.scoreBoardWith) / 5,
+                    4 * (Config.canvasWidth - Config.scoreBoardWith) / 5,
+                );
                 player.yPosition = getRandomNumber(Config.canvasHeight / 5, 4 * Config.canvasHeight / 5);
                 player.angle = Math.random() * 360;
                 player.isAlive = true;
@@ -37,19 +40,19 @@ class PlayerManager {
         // Todo: To beb consistent we should use the EventHandler here...
         document.addEventListener('keydown', (event: KeyboardEvent) => {
             event.preventDefault();
-            if (event.keyCode == player.leftControl) {
+            if (event.keyCode === player.leftControl) {
                 player.isTurningLeft = true;
             }
-            if (event.keyCode == player.rightControl) {
+            if (event.keyCode === player.rightControl) {
                 player.isTurningRight = true;
             }
         });
         document.addEventListener('keyup', (event: KeyboardEvent) => {
             event.preventDefault();
-            if (event.keyCode == player.leftControl) {
+            if (event.keyCode === player.leftControl) {
                 player.isTurningLeft = false;
             }
-            if (event.keyCode == player.rightControl) {
+            if (event.keyCode === player.rightControl) {
                 player.isTurningRight = false;
             }
         });
@@ -93,7 +96,7 @@ class PlayerManager {
         });
     }
 
-    public getPlayers(): Array<Player> {
+    public getPlayers(): Player[] {
         return Array.from(this.players.values());
     }
 
@@ -103,14 +106,14 @@ class PlayerManager {
         }).length;
     }
 
-    public updateScores(ranks: Array<Player>): void {
+    public updateScores(ranks: Player[]): void {
         ranks.forEach((player: Player, index: number) => {
             player.score += this.getNumberOfActivePlayers() - index - 1;
         });
     }
 
     public getHighestScore(): number {
-        const scores: Array<number> = Array.from(this.players.values()).map((player: Player) => {
+        const scores: number[] = Array.from(this.players.values()).map((player: Player) => {
             return player.score;
         });
         return Math.max(...scores);
@@ -119,13 +122,13 @@ class PlayerManager {
     public resetActiveStatus(): void {
         Array.from(this.players.values()).forEach((player: Player) => {
             player.isActive = false;
-        })
+        });
     }
 
     public resetScores(): void {
         Array.from(this.players.values()).forEach((player: Player) => {
             player.score = 0;
-        })
+        });
     }
 }
 

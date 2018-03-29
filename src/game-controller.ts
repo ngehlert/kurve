@@ -1,4 +1,4 @@
-import {Config} from "./config";
+import { Config } from './config';
 import { PlayerManager } from './player-manager';
 import { GameEngine } from './game-engine';
 import { Player } from './player';
@@ -43,20 +43,25 @@ class GameController {
         this.playerManager.initializePlayers();
         if (this.gameEngine) {
             this.gameEngine.start()
-                .then((ranks: Array<Player>) => {
+                .then((ranks: Player[]) => {
                     this.playerManager.updateScores(ranks);
                     this.drawScoreboard();
                     if (this.playerManager.getHighestScore() >= this.getMaxScore()) {
                         this.drawWinningScreen();
                     } else {
-                        EventHandler.addEventListener('start-new-round', document, 'keydown', this.startNextRoundKeyboardEvent.bind(this));
+                        EventHandler.addEventListener(
+                            'start-new-round',
+                            document,
+                            'keydown',
+                            this.startNextRoundKeyboardEvent.bind(this),
+                        );
                     }
                 });
         }
     }
 
     private startNextRoundKeyboardEvent(event: KeyboardEvent) {
-        if(event.keyCode === EKeyCode.Space  || event.keyCode === EKeyCode.Enter) {
+        if (event.keyCode === EKeyCode.Space  || event.keyCode === EKeyCode.Enter) {
             if (this.gameEngine) {
                 EventHandler.removeEventListener('start-new-round');
                 this.startRound();
@@ -68,7 +73,7 @@ class GameController {
         this.drawingContext.textAlign = 'middle';
         const fontSize: number = 40;
         this.drawingContext.font = `${fontSize}px Fredericka the Great, cursive`;
-        const playersWon: Array<Player> = this.playerManager.getPlayers()
+        const playersWon: Player[] = this.playerManager.getPlayers()
             .filter((player: Player) => {
                 return player.score === this.playerManager.getHighestScore();
             });
@@ -103,7 +108,7 @@ class GameController {
     }
 
     private startNewGameKeyboardEvent(event: KeyboardEvent) {
-        if(event.keyCode === EKeyCode.Space  || event.keyCode === EKeyCode.Enter) {
+        if (event.keyCode === EKeyCode.Space  || event.keyCode === EKeyCode.Enter) {
             EventHandler.removeEventListener('start-new-game');
             this.fireworkService.stop();
             this.drawKeySettings();
@@ -114,7 +119,7 @@ class GameController {
         this.drawingContext.clearRect(0, 0, Config.canvasWidth, Config.canvasHeight);
 
         this.drawingContext.lineWidth = this.frameLineWidth;
-        this.drawingContext.strokeStyle = "#6E6E6E";
+        this.drawingContext.strokeStyle = '#6E6E6E';
         this.drawingContext.strokeRect(
             this.frameLineWidth / 2,
             this.frameLineWidth / 2,
@@ -149,19 +154,19 @@ class GameController {
             'toggle-ready-keyboard',
             document,
             'keydown',
-            this.togglePlayerReadyStateKeyboard.bind(this)
+            this.togglePlayerReadyStateKeyboard.bind(this),
         );
         EventHandler.addEventListener(
             'toggle-ready-mouse',
             document,
             'mousedown',
-            this.togglePlayerReadyStateMouse.bind(this)
+            this.togglePlayerReadyStateMouse.bind(this),
         );
         EventHandler.addEventListener(
             'start-game',
             document,
             'keydown',
-            this.startGameEventListener.bind(this)
+            this.startGameEventListener.bind(this),
         );
     }
 
@@ -209,7 +214,8 @@ class GameController {
         const playerIndex: number = this.playerManager.getPlayers().findIndex((currentPlayer: Player) => {
             return currentPlayer === player;
         });
-        const yPosition: number = Config.canvasHeight / (this.playerManager.getPlayers().length + 2) * (playerIndex + 1) - (fontSize / 3);
+        const yPosition: number = Config.canvasHeight / (this.playerManager.getPlayers().length + 2)
+            * (playerIndex + 1) - (fontSize / 3);
         this.drawingContext.clearRect(390, yPosition - fontSize, 100, fontSize + 5);
 
         player.isActive = state;
@@ -221,32 +227,32 @@ class GameController {
 
     private getKeyName(keyCode: EKeyCode | EMouseClick): string {
         switch (keyCode) {
-            case EKeyCode.One:
-                return '1';
-            case EKeyCode.Q:
-                return 'Q';
-            case EKeyCode.LAlt:
-                return 'L . Alt';
-            case EKeyCode.RAlt:
-                return 'R . Alt';
-            case EKeyCode.M:
-                return 'M';
-            case EKeyCode.Comma:
-                return ',';
-            case EKeyCode.P:
-                return 'P';
-            case EKeyCode.SZ:
-                return 'ß';
-            case EKeyCode.Left:
-                return 'L . Arrow';
-            case EKeyCode.Down:
-                return 'D . Arrow';
-            case EMouseClick.Left:
-                return 'L . Mouse';
-            case EMouseClick.Right:
-                return 'R . Mouse';
-            default:
-                return '';
+        case EKeyCode.One:
+            return '1';
+        case EKeyCode.Q:
+            return 'Q';
+        case EKeyCode.LAlt:
+            return 'L . Alt';
+        case EKeyCode.RAlt:
+            return 'R . Alt';
+        case EKeyCode.M:
+            return 'M';
+        case EKeyCode.Comma:
+            return ',';
+        case EKeyCode.P:
+            return 'P';
+        case EKeyCode.SZ:
+            return 'ß';
+        case EKeyCode.Left:
+            return 'L . Arrow';
+        case EKeyCode.Down:
+            return 'D . Arrow';
+        case EMouseClick.Left:
+            return 'L . Mouse';
+        case EMouseClick.Right:
+            return 'R . Mouse';
+        default:
+            return '';
         }
     }
 
@@ -255,7 +261,7 @@ class GameController {
             Config.canvasWidth - Config.scoreBoardWith,
             0,
             Config.canvasWidth,
-            Config.canvasHeight
+            Config.canvasHeight,
         );
 
         this.drawingContext.beginPath();
@@ -263,12 +269,12 @@ class GameController {
             Config.canvasWidth - Config.scoreBoardWith,
             this.frameLineWidth / 2,
             Config.scoreBoardWith - (this.frameLineWidth / 2),
-            Config.canvasHeight - (this.frameLineWidth)
+            Config.canvasHeight - (this.frameLineWidth),
         );
         this.drawingContext.fillStyle = '#3C3C3C';
         this.drawingContext.fill();
         this.drawingContext.lineWidth = this.frameLineWidth;
-        this.drawingContext.strokeStyle = "#6E6E6E";
+        this.drawingContext.strokeStyle = '#6E6E6E';
         this.drawingContext.stroke();
 
         this.playerManager.getPlayers().forEach((player: Player, index: number) => {
@@ -290,23 +296,23 @@ class GameController {
     private drawGameFrames() {
         this.drawPlayingFieldFrame();
         this.drawScoreboard();
-    };
+    }
 
     private drawPlayingFieldFrame() {
         this.drawingContext.clearRect(
             0,
             0,
             Config.canvasWidth - Config.scoreBoardWith,
-            Config.canvasHeight
+            Config.canvasHeight,
         );
 
         this.drawingContext.lineWidth = this.frameLineWidth;
-        this.drawingContext.strokeStyle = "#6E6E6E";
+        this.drawingContext.strokeStyle = '#6E6E6E';
         this.drawingContext.strokeRect(
             this.frameLineWidth / 2,
             this.frameLineWidth / 2,
             Config.canvasWidth - Config.scoreBoardWith - (this.frameLineWidth / 2),
-            Config.canvasHeight - this.frameLineWidth
+            Config.canvasHeight - this.frameLineWidth,
         );
     }
 

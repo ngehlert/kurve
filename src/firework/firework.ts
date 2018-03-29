@@ -5,11 +5,13 @@ import { FireworkConfig } from './config';
 class Firework {
     private x: number = Config.canvasWidth * (Math.random() * 0.8 + 0.1); // from 0.1-0.9 widths
     private y: number = Config.canvasHeight * (Math.random() * 0.8 + 0.1); // from 0.1-0.9 heights
-    private strength: number = Math.random() * (FireworkConfig.maxStrength - FireworkConfig.minStrength) + FireworkConfig.minStrength;
-    private color: string = `${Math.trunc(Math.random() * 255)},${Math.trunc(Math.random() * 255)},${Math.trunc(Math.random() * 255)}`;
+    private strength: number = Math.random() * (FireworkConfig.maxStrength - FireworkConfig.minStrength)
+        + FireworkConfig.minStrength;
+    private color: string = `${Math.trunc(Math.random() * 255)},${Math.trunc(Math.random() * 255)},`
+        + `${Math.trunc(Math.random() * 255)}`;
     public life: number = 0;
 
-    private particles: Array<Particle> = [];
+    private particles: Particle[] = [];
 
     constructor(private drawingContext: CanvasRenderingContext2D) {
         const n = ~~(Math.random() * (FireworkConfig.maxTrails - FireworkConfig.minTrails)) + FireworkConfig.minTrails;
@@ -29,7 +31,7 @@ class Firework {
     public update() {
         this.life++;
         if (this.life < 0) {
-            return; //allows life to be delayed
+            return; // allows life to be delayed
         }
         for (let i: number = this.particles.length; i--;) {
             this.particles[i].update();

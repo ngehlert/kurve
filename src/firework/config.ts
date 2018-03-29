@@ -11,4 +11,4 @@ class FireworkConfig {
     public static readonly delay: number = 0.5;
 }
 
-export { FireworkConfig }
+export { FireworkConfig };

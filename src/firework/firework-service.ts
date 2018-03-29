@@ -4,7 +4,7 @@ import { Config } from '../config';
 import { FireworkConfig } from './config';
 
 class FireworkService {
-    private stars: Array<Star> = [];
+    private stars: Star[] = [];
     private firework1: Firework;
     private firework2: Firework;
     private isRunning: boolean = false;
@@ -72,7 +72,7 @@ class FireworkService {
             0,
             0,
             Config.canvasWidth,
-            Config.canvasHeight
+            Config.canvasHeight,
         );
     }
 

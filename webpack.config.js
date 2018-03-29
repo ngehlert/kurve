@@ -26,8 +26,16 @@ module.exports = {
                     loader: 'ts-loader',
                     options: {}
                 }]
+            },
+            {
+                test: /\.ts$/,
+                enforce: 'pre',
+                use: [{
+                    loader: 'tslint-loader',
+                    options: {}
+                }]
             }
-        ]
+        ],
     },
     plugins: [
         new HtmlWebpackPlugin({

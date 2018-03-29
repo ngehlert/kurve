@@ -17,7 +17,8 @@ class Config {
      */
     public static holeSize: number = 10;
     /**
-     * Defines the frequency with that holes appear. the lower, the less holes appear. has to be greater than 0.
+     * Defines the frequency with that holes appear. the lower, the less holes appear.
+     * Has to be greater than 0.
      */
     public static holeFrequency: number = 10;
 }
