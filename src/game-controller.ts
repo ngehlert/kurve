@@ -247,6 +247,10 @@ class GameController {
             return 'L . Arrow';
         case EKeyCode.Down:
             return 'D . Arrow';
+        case EKeyCode.Y:
+            return 'Y';
+        case EKeyCode.X:
+            return 'X';
         case EMouseClick.Left:
             return 'L . Mouse';
         case EMouseClick.Right:

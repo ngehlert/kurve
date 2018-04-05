@@ -1,4 +1,5 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const FaviconsWebpackPlugin = require('favicons-webpack-plugin')
 
 module.exports = {
 
@@ -41,6 +42,7 @@ module.exports = {
         new HtmlWebpackPlugin({
             template: 'src/index.html',
             inject: 'body'
-        })
+        }),
+        new FaviconsWebpackPlugin('./logo.png')
     ]
 };

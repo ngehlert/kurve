@@ -11,6 +11,7 @@
   "author": "Nicolas Gehlert",
   "license": "TBD",
   "devDependencies": {
+    "favicons-webpack-plugin": "0.0.9",
     "html-webpack-plugin": "3.0.6",
     "ts-loader": "4.0.1",
     "tslint": "^5.9.1",

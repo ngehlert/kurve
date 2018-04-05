@@ -70,7 +70,7 @@ window.onload = () => {
         const player1: Player = new Player(1, 'Player 1', EColor.Red, EKeyCode.One, EKeyCode.Q);
         playerManager.addPlayer(player1);
 
-        const player2: Player = new Player(2, 'Player 2', EColor.Yellow, EKeyCode.LAlt, EKeyCode.RAlt);
+        const player2: Player = new Player(2, 'Player 2', EColor.Yellow, EKeyCode.Y, EKeyCode.X);
         playerManager.addPlayer(player2);
 
         const player3: Player = new Player(3, 'Player 3', EColor.Orange, EKeyCode.M, EKeyCode.Comma);
