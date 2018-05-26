@@ -8,8 +8,8 @@ import { EventHandler } from './event-handler';
 
 window.onload = () => {
 
-    Config.canvasWidth = document.body.clientWidth - 20;
-    Config.canvasHeight = document.body.clientHeight - 50;
+    Config.canvasWidth = IS_ELECTRON_BUILD ? document.body.clientWidth : document.body.clientWidth - 20;
+    Config.canvasHeight = IS_ELECTRON_BUILD ? document.body.clientHeight : document.body.clientHeight - 50;
 
     const canvasId: string = 'canvas';
     const canvasElement: HTMLCanvasElement | null = document.getElementById(canvasId) as HTMLCanvasElement;

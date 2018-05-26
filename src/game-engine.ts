@@ -47,7 +47,7 @@ class GameEngine {
     private startDrawingIntervalEvent(event: KeyboardEvent) {
         if (event.keyCode === EKeyCode.Space || event.keyCode === EKeyCode.Enter) {
             if (!this.interval) {
-                this.interval = setInterval(
+                this.interval = window.setInterval(
                     () => {
                         EventHandler.removeEventListener('draw');
                         this.draw();
