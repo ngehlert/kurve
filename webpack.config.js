@@ -1,6 +1,9 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const FaviconsWebpackPlugin = require('favicons-webpack-plugin')
+const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
+const webpack = require('webpack');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
 
+const target = process.env.TARGET || 'browser';
 module.exports = {
 
     // Currently we need to add '.ts' to the resolve.extensions array.
@@ -39,10 +42,14 @@ module.exports = {
         ],
     },
     plugins: [
+        new CleanWebpackPlugin(['public']),
         new HtmlWebpackPlugin({
-            template: 'src/index.html',
+            template: target === 'browser' ? 'src/index.html' : 'src/index-electron.html',
             inject: 'body',
             hash: true,
+        }),
+        new webpack.DefinePlugin({
+            IS_ELECTRON_BUILD: target === 'electron',
         }),
         new FaviconsWebpackPlugin('./logo.png')
     ]

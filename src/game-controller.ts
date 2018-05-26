@@ -290,8 +290,8 @@ class GameController {
             this.drawingContext.font = `${fontSize}px Fredericka the Great, cursive`;
             this.drawingContext.fillStyle = player.color;
             this.drawingContext.fillText(
-                `${player.score}`,
-                Config.canvasWidth - (Config.scoreBoardWith / 1.5) - (4 * this.frameLineWidth),
+                `${player.score}`.padStart(2, ' '),
+                Config.canvasWidth - (Config.scoreBoardWith / 1.25) - (4 * this.frameLineWidth),
                 Config.canvasHeight / this.playerManager.getPlayers().length * (index + 1) - (fontSize / 3),
             );
         });
