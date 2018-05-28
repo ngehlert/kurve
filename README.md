@@ -20,12 +20,19 @@ Head over to [https://kurve.ngehlert.de](https://kurve.ngehlert.de) if you are i
  3. `npm run build`
  4. Open *public/index.html*
 
- ## Development
- `npm run dev:w`
+## Development
+`npm run dev:w`
 
- Will enable watch mode and constantly rebuild project on changes
+Will enable watch mode and constantly rebuild project on changes
 
- ## Electron
- `npm run start-electron`
+## Electron
+`npm run start-electron`
 
- Will build an electron version and start up the app
+Will build an electron version and start up the app
+ 
+## Sample Images
+![Sample 1](sample-1.png "Sample 1")
+ 
+![Sample 2](sample-2.png "Sample 2")
+
+![Sample 3](sample-3.png "Sample 3")
