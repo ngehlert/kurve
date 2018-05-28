@@ -11,6 +11,11 @@ Head over to [https://kurve.ngehlert.de](https://kurve.ngehlert.de) if you are i
 ## Get it running
 
  1. Check out repository
+ 2. Open *public/index.html*
+
+## Get it running developer style
+
+ 1. Check out repository
  2. `npm install`
  3. `npm run build`
  4. Open *public/index.html*
