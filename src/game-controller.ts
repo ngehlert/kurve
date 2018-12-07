@@ -42,7 +42,7 @@ class GameController {
         this.drawPlayingFieldFrame();
         this.playerManager.initializePlayers();
         if (this.gameEngine) {
-            this.gameEngine.start()
+            this.gameEngine.prepare()
                 .then((ranks: Player[]) => {
                     this.playerManager.updateScores(ranks);
                     this.drawScoreboard();
@@ -57,6 +57,23 @@ class GameController {
                         );
                     }
                 });
+
+            EventHandler.addEventListener(
+                'start-game-engine',
+                document,
+                'keydown',
+                this.startEngingeKeyboardEvent.bind(this),
+            );
+        }
+    }
+
+    private startEngingeKeyboardEvent(event: KeyboardEvent): void {
+        if (event.keyCode === EKeyCode.Space  || event.keyCode === EKeyCode.Enter) {
+            if (this.gameEngine) {
+                this.gameEngine.start();
+            }
+
+            EventHandler.removeEventListener('start-game-engine');
         }
     }
 
