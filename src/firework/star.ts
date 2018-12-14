@@ -12,7 +12,7 @@ class Star {
 
     public draw() {
         this.b += this.flashingFactor * (Math.random() - .5);
-        this.drawingContext.fillStyle = 'rgba(255,255,255,' + this.b + ')';
+        this.drawingContext.fillStyle = `rgba(255,255,255,${this.b})`;
         this.drawingContext.beginPath();
         this.drawingContext.arc(Math.trunc(this.x), Math.trunc(this.y), this.r, 0, Math.PI * 2);
         this.drawingContext.fill();
@@ -21,4 +21,3 @@ class Star {
 }
 
 export { Star };
-

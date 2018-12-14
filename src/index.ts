@@ -54,7 +54,7 @@ window.onload = () => {
         );
 
         drawingContext.textAlign = 'middle';
-        drawingContext.font = `lighter 16px Helvetica, Arial, sans-serif`;
+        drawingContext.font = 'lighter 16px Helvetica, Arial, sans-serif';
         drawingContext.fillStyle = '#ffffff';
         textString = 'Press any key to continue';
         textWidth = drawingContext.measureText(textString).width;
