@@ -13,12 +13,13 @@
   "author": "Nicolas Gehlert",
   "license": "LICENSE",
   "devDependencies": {
+    "@ngehlert/event-helper": "^1.0.3",
     "clean-webpack-plugin": "0.1.19",
     "deep-extend": "0.6.0",
     "electron": "2.0.8",
     "electron-osx-sign": "0.4.11",
     "electron-packager": "12.2.0",
-    "favicons-webpack-plugin": "0.0.9",
+    "favicons-webpack-plugin": "^1.0.2",
     "html-webpack-plugin": "3.0.6",
     "randomatic": "3.1.1",
     "ts-loader": "4.0.1",
@@ -27,6 +28,6 @@
     "tslint-loader": "3.6.0",
     "typescript": "2.7.2",
     "webpack": "^4.29.6",
-    "webpack-cli": "2.0.11"
+    "webpack-cli": "^3.3.10"
   }
 }

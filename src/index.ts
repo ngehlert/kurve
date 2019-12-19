@@ -4,7 +4,7 @@ import { Player } from './player';
 import { EColor } from './color';
 import { Config } from './config';
 import { EKeyCode, EMouseClick } from './keyboard-controls';
-import { EventHandler } from './event-handler';
+import { EventHelper } from '@ngehlert/event-helper';
 
 window.onload = () => {
 
@@ -28,7 +28,7 @@ window.onload = () => {
 
     drawIntroText();
 
-    EventHandler.oneTimeEventListener(document, 'keydown', initGame);
+    EventHelper.oneTimeEventListener(document, 'keydown', initGame);
 
     function drawIntroText() {
         const frameLineWidth: number = 5;

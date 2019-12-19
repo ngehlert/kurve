@@ -3,8 +3,8 @@ import { PlayerManager } from './player-manager';
 import { GameEngine } from './game-engine';
 import { Player } from './player';
 import { EKeyCode, EMouseClick } from './keyboard-controls';
-import { EventHandler } from './event-handler';
 import { FireworkService } from './firework/firework-service';
+import { EventHelper } from '@ngehlert/event-helper';
 
 class GameController {
     private gameEngine: GameEngine | undefined;
@@ -29,9 +29,9 @@ class GameController {
 
             this.playerManager.initializePlayers();
             this.startRound();
-            EventHandler.removeEventListener('toggle-ready-keyboard');
-            EventHandler.removeEventListener('toggle-ready-mouse');
-            EventHandler.removeEventListener('start-game');
+            EventHelper.removeEventListener('toggle-ready-keyboard');
+            EventHelper.removeEventListener('toggle-ready-mouse');
+            EventHelper.removeEventListener('start-game');
         }
     }
 
@@ -49,7 +49,7 @@ class GameController {
                     if (this.playerManager.getHighestScore() >= this.getMaxScore()) {
                         this.drawWinningScreen();
                     } else {
-                        EventHandler.addEventListener(
+                        EventHelper.addEventListener(
                             'start-new-round',
                             document,
                             'keydown',
@@ -58,7 +58,7 @@ class GameController {
                     }
                 });
 
-            EventHandler.addEventListener(
+            EventHelper.addEventListener(
                 'start-game-engine',
                 document,
                 'keydown',
@@ -73,14 +73,14 @@ class GameController {
                 this.gameEngine.start();
             }
 
-            EventHandler.removeEventListener('start-game-engine');
+            EventHelper.removeEventListener('start-game-engine');
         }
     }
 
     private startNextRoundKeyboardEvent(event: KeyboardEvent) {
         if (event.keyCode === EKeyCode.Space  || event.keyCode === EKeyCode.Enter) {
             if (this.gameEngine) {
-                EventHandler.removeEventListener('start-new-round');
+                EventHelper.removeEventListener('start-new-round');
                 this.startRound();
             }
         }
@@ -121,12 +121,12 @@ class GameController {
 
         this.playerManager.resetActiveStatus();
         this.playerManager.resetScores();
-        EventHandler.addEventListener('start-new-game', document, 'keydown', this.startNewGameKeyboardEvent.bind(this));
+        EventHelper.addEventListener('start-new-game', document, 'keydown', this.startNewGameKeyboardEvent.bind(this));
     }
 
     private startNewGameKeyboardEvent(event: KeyboardEvent) {
         if (event.keyCode === EKeyCode.Space  || event.keyCode === EKeyCode.Enter) {
-            EventHandler.removeEventListener('start-new-game');
+            EventHelper.removeEventListener('start-new-game');
             this.fireworkService.stop();
             this.drawKeySettings();
         }
@@ -167,19 +167,19 @@ class GameController {
             Config.canvasHeight - 50,
         );
 
-        EventHandler.addEventListener(
+        EventHelper.addEventListener(
             'toggle-ready-keyboard',
             document,
             'keydown',
             this.togglePlayerReadyStateKeyboard.bind(this),
         );
-        EventHandler.addEventListener(
+        EventHelper.addEventListener(
             'toggle-ready-mouse',
             document,
             'mousedown',
             this.togglePlayerReadyStateMouse.bind(this),
         );
-        EventHandler.addEventListener(
+        EventHelper.addEventListener(
             'start-game',
             document,
             'keydown',
