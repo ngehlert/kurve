@@ -1,6 +1,18 @@
 class Config {
     public static canvasWidth: number = 0;
     public static canvasHeight: number = 0;
+
+    public static customCanvasWidth: number | undefined;
+    public static customCanvasHeight: number | undefined;
+
+    public static getCanvasWidth(): number {
+        return Config.customCanvasWidth ?? Config.canvasWidth;
+    }
+
+    public static getCanvasHeight(): number {
+        return Config.customCanvasHeight ?? Config.canvasHeight;
+    }
+
     public static lineWidth: number = 4;
     public static fps: number = 80;
     /**

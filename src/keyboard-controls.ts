@@ -22,4 +22,4 @@ enum EMouseClick {
 
 type KeyboardControls = EKeyCode | EMouseClick;
 
-export { EKeyCode, EMouseClick, KeyboardControls };
+export { EKeyCode, EMouseClick, type KeyboardControls };

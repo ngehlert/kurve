@@ -123,7 +123,7 @@ class GameEngine {
     }
 
     private hitTest(point: {x: number, y: number}): boolean {
-        if (point.x > Config.canvasWidth || point.y > Config.canvasHeight || point.x < 0 || point.y < 0) {
+        if (point.x > Config.getCanvasWidth() || point.y > Config.getCanvasHeight() || point.x < 0 || point.y < 0) {
             return true;
         }
 

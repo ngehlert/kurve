@@ -27,10 +27,10 @@ class PlayerManager {
             })
             .forEach((player: Player) => {
                 player.xPosition = getRandomNumber(
-                    (Config.canvasWidth - Config.scoreBoardWith) / 5,
-                    4 * (Config.canvasWidth - Config.scoreBoardWith) / 5,
+                    (Config.getCanvasWidth() - Config.scoreBoardWith) / 5,
+                    4 * (Config.getCanvasWidth() - Config.scoreBoardWith) / 5,
                 );
-                player.yPosition = getRandomNumber(Config.canvasHeight / 5, 4 * Config.canvasHeight / 5);
+                player.yPosition = getRandomNumber(Config.getCanvasHeight() / 5, 4 * Config.getCanvasHeight() / 5);
                 player.angle = Math.random() * 360;
                 player.isAlive = true;
             });
