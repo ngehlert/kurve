@@ -13,7 +13,10 @@ class FireworkService {
     private previousState: ImageData | undefined;
     private animationId: number | undefined;
 
-    constructor(private drawingContext: CanvasRenderingContext2D, private withStars: boolean) {
+    constructor(
+        private drawingContext: CanvasRenderingContext2D,
+        private withStars: boolean,
+    ) {
         this.firework1 = new Firework(this.drawingContext);
         this.firework2 = new Firework(this.drawingContext);
         this.firework2.life = -FireworkConfig.fireworkLifeTime - FireworkConfig.delay;
@@ -68,12 +71,7 @@ class FireworkService {
     }
 
     private saveDrawingSurface() {
-        this.previousState = this.drawingContext.getImageData(
-            0,
-            0,
-            Config.canvasWidth,
-            Config.canvasHeight,
-        );
+        this.previousState = this.drawingContext.getImageData(0, 0, Config.canvasWidth, Config.canvasHeight);
     }
 
     private restoreDrawingSurface() {

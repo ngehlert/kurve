@@ -1,4 +1,4 @@
-const {app, BrowserWindow} = require('electron');
+const { app, BrowserWindow } = require('electron');
 const path = require('path');
 const url = require('url');
 
@@ -7,17 +7,19 @@ const url = require('url');
 // sobald das Objekt dem JavaScript-Garbagekollektor übergeben wird.
 let win;
 
-function createWindow () {
+function createWindow() {
     // Erstellen des Browser-Fensters.
-    win = new BrowserWindow({width: 1024, height: 768});
+    win = new BrowserWindow({ width: 1024, height: 768 });
     win.maximize();
 
     // und Laden der index.html der App.
-    win.loadURL(url.format({
-        pathname: path.join(__dirname, 'index.html'),
-        protocol: 'file:',
-        slashes: true
-    }));
+    win.loadURL(
+        url.format({
+            pathname: path.join(__dirname, 'index.html'),
+            protocol: 'file:',
+            slashes: true,
+        }),
+    );
 
     // Öffnen der DevTools.
     // win.webContents.openDevTools();
@@ -28,7 +30,7 @@ function createWindow () {
         // in einem Array speichern, falls Ihre App mehrere Fenster unterstützt.
         // Das ist der Zeitpunkt, an dem Sie das zugehörige Element löschen sollten.
         win = null;
-    })
+    });
 }
 
 // Diese Methode wird aufgerufen, wenn Electron mit der
@@ -40,7 +42,7 @@ app.on('ready', createWindow);
 app.on('window-all-closed', () => {
     // Unter macOS ist es üblich für Apps und ihre Menu Bar
     // aktiv zu bleiben bis der Nutzer explizit mit Cmd + Q die App beendet.
-        app.quit();
+    app.quit();
     if (process.platform !== 'darwin') {
     }
 });

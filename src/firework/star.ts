@@ -11,7 +11,7 @@ class Star {
     constructor(private drawingContext: CanvasRenderingContext2D) {}
 
     public draw() {
-        this.b += this.flashingFactor * (Math.random() - .5);
+        this.b += this.flashingFactor * (Math.random() - 0.5);
         this.drawingContext.fillStyle = `rgba(255,255,255,${this.b})`;
         this.drawingContext.beginPath();
         this.drawingContext.arc(Math.trunc(this.x), Math.trunc(this.y), this.r, 0, Math.PI * 2);

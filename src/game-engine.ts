@@ -3,7 +3,6 @@ import { Config } from './config';
 import { getRandomNumber } from './utils';
 
 class GameEngine {
-
     private interval: number = 0;
     private canvasContext: CanvasRenderingContext2D;
     private players: Player[];
@@ -21,7 +20,7 @@ class GameEngine {
 
     public prepare(): Promise<Player[]> {
         if (this.interval) {
-            return new Promise(resolve => resolve([]));
+            return new Promise((resolve) => resolve([]));
         }
         return new Promise((resolve, reject) => {
             this.resolveCallback = resolve;
@@ -36,12 +35,9 @@ class GameEngine {
 
     public start() {
         if (!this.interval) {
-            this.interval = window.setInterval(
-                () => {
-                    this.draw();
-                },
-                1000 / Config.fps,
-            );
+            this.interval = window.setInterval(() => {
+                this.draw();
+            }, 1000 / Config.fps);
         }
     }
 
@@ -53,7 +49,7 @@ class GameEngine {
         }
     }
 
-    private draw():void {
+    private draw(): void {
         this.players
             .filter((player: Player): boolean => {
                 return player.isActive && player.isAlive;
@@ -66,8 +62,8 @@ class GameEngine {
                     player.angle += Config.angleModifier;
                 }
 
-                const deltaX = Math.cos(player.angle * Math.PI / 180) * this.speed;
-                const deltaY = Math.sin(player.angle * Math.PI / 180) * this.speed;
+                const deltaX = Math.cos((player.angle * Math.PI) / 180) * this.speed;
+                const deltaY = Math.sin((player.angle * Math.PI) / 180) * this.speed;
 
                 if (this.hitTest({ x: player.xPosition + deltaX, y: player.yPosition + deltaY })) {
                     this.playerRanks.unshift(player);
@@ -122,7 +118,7 @@ class GameEngine {
         return Math.floor(getRandomNumber(1, 100) * (100 / Config.holeFrequency));
     }
 
-    private hitTest(point: {x: number, y: number}): boolean {
+    private hitTest(point: { x: number; y: number }): boolean {
         if (point.x > Config.getCanvasWidth() || point.y > Config.getCanvasHeight() || point.x < 0 || point.y < 0) {
             return true;
         }

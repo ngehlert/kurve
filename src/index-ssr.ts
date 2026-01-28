@@ -39,7 +39,7 @@ export function initGame() {
             Config.getCanvasHeight() - frameLineWidth,
         );
         drawingContext.textAlign = 'start';
-        const fontSize: number = (Config.getCanvasHeight()) / 10;
+        const fontSize: number = Config.getCanvasHeight() / 10;
         drawingContext.font = `${fontSize}px Fredericka the Great, cursive`;
         drawingContext.fillStyle = '#ffffff';
         let textString: string = 'Achtung, die Kurve !';
@@ -47,8 +47,8 @@ export function initGame() {
 
         drawingContext.fillText(
             textString,
-            (Config.getCanvasWidth() / 2) - (textWidth / 2),
-            (Config.getCanvasHeight() / 2) + (fontSize / 2),
+            Config.getCanvasWidth() / 2 - textWidth / 2,
+            Config.getCanvasHeight() / 2 + fontSize / 2,
         );
 
         drawingContext.textAlign = 'start';
@@ -56,11 +56,7 @@ export function initGame() {
         drawingContext.fillStyle = '#ffffff';
         textString = 'Press any key to continue';
         textWidth = drawingContext.measureText(textString).width;
-        drawingContext.fillText(
-            textString,
-            (Config.getCanvasWidth() / 2) - (textWidth / 2),
-            Config.getCanvasHeight() - 50,
-        );
+        drawingContext.fillText(textString, Config.getCanvasWidth() / 2 - textWidth / 2, Config.getCanvasHeight() - 50);
     }
 
     function initGame() {
@@ -85,4 +81,4 @@ export function initGame() {
 
         const game: GameController = new GameController(drawingContext, playerManager);
     }
-};
+}

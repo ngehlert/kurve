@@ -1,58 +1,69 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <style>
-        @import url('https://fonts.googleapis.com/css?family=Fredericka+the+Great');
-        html,
-        body {
-            font-family: 'Fredericka the Great', cursive;
-            width: 100%;
-            height: 100%;
-            margin: 0;
-            background-color: #bdbdbd;
-        }
-        .flex-container {
-            width: 100%;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
+    <head>
+        <meta charset="UTF-8" />
+        <style>
+            @import url('https://fonts.googleapis.com/css?family=Fredericka+the+Great');
+            html,
+            body {
+                font-family: 'Fredericka the Great', cursive;
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                background-color: #bdbdbd;
+            }
+            .flex-container {
+                width: 100%;
+                height: 100%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+            }
 
-        #canvas {
-            background-color: #000000;
-        }
+            #canvas {
+                background-color: #000000;
+            }
 
-        .font-loader-hack {
-            position: absolute;
-            color: #bdbdbd;
-            top: -10px;
-            left: -10px;
-        }
+            .font-loader-hack {
+                position: absolute;
+                color: #bdbdbd;
+                top: -10px;
+                left: -10px;
+            }
 
-        .footer {
-            padding: 12px 0 0 0;
-        }
+            .footer {
+                padding: 12px 0 0 0;
+            }
 
-        a:link,
-        a:hover,
-        a:active,
-        a:visited {
-            color: #d12026;
-            text-decoration: none;
-        }
-    </style>
-    <title>Achtung, die Kurve!</title>
-</head>
-<body oncontextmenu="return false;">
-    <div class="font-loader-hack">¯\_(ツ)_/¯</div>
-    <div class="flex-container">
-        <canvas id="canvas"></canvas>
-        <div class="footer">
-            Fork me on <a href="https://github.com/ngehlert/kurve" target="_blank">GitHub</a>
-            - Made by <a href="https://ngehlert.de" target="_blank">Nicolas Gehlert</a></div>
-    </div>
-</body>
+            a:link,
+            a:hover,
+            a:active,
+            a:visited {
+                color: #d12026;
+                text-decoration: none;
+            }
+        </style>
+        <title>Achtung, die Kurve!</title>
+    </head>
+    <body oncontextmenu="return false;">
+        <div class="font-loader-hack">¯\_(ツ)_/¯</div>
+        <div class="flex-container">
+            <canvas id="canvas"></canvas>
+            <div class="footer">
+                Fork me on
+                <a
+                    href="https://github.com/ngehlert/kurve"
+                    target="_blank"
+                    >GitHub</a
+                >
+                - Made by
+                <a
+                    href="https://ngehlert.de"
+                    target="_blank"
+                    >Nicolas Gehlert</a
+                >
+            </div>
+        </div>
+    </body>
 </html>

@@ -9,11 +9,12 @@ class Particle {
         private drawingContext: CanvasRenderingContext2D,
         private x: number,
         private y: number,
-        private vx:  number,
-        private vy:  number,
-        private ax:  number,
-        private ay:  number,
-        private color: string) {}
+        private vx: number,
+        private vy: number,
+        private ax: number,
+        private ay: number,
+        private color: string,
+    ) {}
 
     public update() {
         this.lifeTime--;
@@ -30,7 +31,7 @@ class Particle {
     }
 
     public draw() {
-        const opacity: number = Math.trunc(this.lifeTime * 100 / FireworkConfig.fireworkLifeTime) / 100;
+        const opacity: number = Math.trunc((this.lifeTime * 100) / FireworkConfig.fireworkLifeTime) / 100;
 
         // tail
         this.drawingContext.fillStyle = `rgba(${this.color},${opacity * 0.4})`;

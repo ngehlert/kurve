@@ -5,20 +5,19 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 const target = process.env.TARGET || 'browser';
 module.exports = {
-
     // Currently we need to add '.ts' to the resolve.extensions array.
     resolve: {
-        extensions: ['.ts', '.tsx', '.js', '.jsx']
+        extensions: ['.ts', '.tsx', '.js', '.jsx'],
     },
 
     // Source maps support ('inline-source-map' also works)
     devtool: 'source-map',
 
     output: {
-        path: __dirname + '/public'
+        path: __dirname + '/public',
     },
     entry: {
-        app: './src/index.ts'
+        app: './src/index.ts',
     },
 
     // Add the loader for .ts files.
@@ -26,19 +25,23 @@ module.exports = {
         rules: [
             {
                 test: /\.tsx?$/,
-                use: [{
-                    loader: 'ts-loader',
-                    options: {}
-                }]
+                use: [
+                    {
+                        loader: 'ts-loader',
+                        options: {},
+                    },
+                ],
             },
             {
                 test: /\.ts$/,
                 enforce: 'pre',
-                use: [{
-                    loader: 'tslint-loader',
-                    options: {}
-                }]
-            }
+                use: [
+                    {
+                        loader: 'tslint-loader',
+                        options: {},
+                    },
+                ],
+            },
         ],
     },
     plugins: [
@@ -51,6 +54,6 @@ module.exports = {
         new webpack.DefinePlugin({
             IS_ELECTRON_BUILD: target === 'electron',
         }),
-        new FaviconsWebpackPlugin('./logo.png')
-    ]
+        new FaviconsWebpackPlugin('./logo.png'),
+    ],
 };

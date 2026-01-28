@@ -1,13 +1,9 @@
 {
-  "extends": "tslint-config-airbnb",
-  "rules": {
-    "max-line-length":  [true, 120],
-    "ter-indent": [true, 4],
-    "no-increment-decrement": false,
-    "variable-name": [
-      "check-format",
-      "allow-leading-underscore",
-      "ban-keywords"
-    ]
-  }
+    "extends": "tslint-config-airbnb",
+    "rules": {
+        "max-line-length": [true, 120],
+        "ter-indent": [true, 4],
+        "no-increment-decrement": false,
+        "variable-name": ["check-format", "allow-leading-underscore", "ban-keywords"]
+    }
 }
